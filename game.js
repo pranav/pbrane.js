@@ -60,7 +60,7 @@ var drawPos = function() {
     ctx.font = "24px Helvetica";
     ctx.textAlign = "left";
     ctx.textBaseAlign = "top";
-    ctx.fillText("X: " + hero.x + " Y: " + hero.y, 32, 32);
+    ctx.fillText("X: " + monster.x + " Y: " + monster.y, 32, 32);
 }
 
 /////////////////////////////////////////////
@@ -75,6 +75,7 @@ var hero = {
 
 // The monster
 var monster = {
+    speed: 450,
     x: 0,
     y: 0
 };
@@ -103,6 +104,7 @@ var nextWorld = function(modifier) {
     if(39 in keysDown && hero.x < (canvas.width - heroImage.width)) // Right
         hero.x += hero.speed * modifier;
         
+    monsterRunsFromHero(modifier);
     heroHitsMonster();      
 }
 
@@ -114,6 +116,18 @@ var heroHitsMonster = function() {
         && monster.y <= (hero.y + heroImage.height))
         newMonster();
 
+}
+
+// Mechanics for the monster running from hero
+var monsterRunsFromHero = function(modifier) {
+    if(monster.x + monsterImage.width/2 > hero.x + heroImage.width/2 && monster.x > canvas.width - monsterImage.width)
+        monster.x += monster.speed * modifier;
+    if(monster.x + monsterImage.width/2 < hero.x + heroImage.width/2 && monster.x > 0)
+        monster.x -= monster.speed * modifier;
+    if(monster.y + monsterImage.height/2 > hero.y + heroImage.height/2 && monster.y < canvas.height - monsterImage.height)
+        monster.y += monster.speed * modifier;
+    if(monster.y + monsterImage.height/2 < hero.y + heroImage.height/2  && monster.y > 0)
+        monster.y -= monster.speed * modifier;
 }
 
 // Spawns a new monster on the map
