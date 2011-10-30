@@ -82,10 +82,12 @@ var monster = {
 // Key-handlers
 var keysDown = {};
 
+// Adds the current key to the keyCode
 addEventListener("keydown", function(e) {
     keysDown[e.keyCode] = true;
 }, false);
 
+// Removes the current key from the keyCode
 addEventListener("keyup", function(e) {
     delete keysDown[e.keyCode];
 }, false);
@@ -104,18 +106,23 @@ var nextWorld = function(modifier) {
     heroHitsMonster();      
 }
 
+// if the hero hits the monster, then respawn the monster
 var heroHitsMonster = function() {
-    if(Math.abs(hero.x - monster.x) <= Math.abs(heroImage.width - monsterImage.width) &&
-        Math.abs(hero.y - monster.y) <= Math.abs(heroIMage.width - monsterImage.height))
+    if(hero.x <= (monster.x + monsterImage.width)
+        && monster.x <= hero.x + heroImage.width
+        && hero.y <= (monster.y + monsterImage.height)
+        && monster.y <= (hero.y + heroImage.height))
         newMonster();
 
 }
 
+// Spawns a new monster on the map
 var newMonster = function() {
-	monster.x = 32 + (Math.random() * (canvas.width - 64));
-	monster.y = 32 + (Math.random() * (canvas.height - 64));
+	monster.x = monsterImage.width + (Math.random() * (canvas.width - monsterImage.width*2));
+	monster.y = monsterImage.height + (Math.random() * (canvas.height - monsterImage.height*2));
 } 
 
+// The initial world state
 var initWorld = function() {
     hero.x = canvas.width / 2;
     hero.y = canvas.height / 2;
