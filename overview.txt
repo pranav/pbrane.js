@@ -1,2 +1,57 @@
-This is the overview file. it lays out the flow for p-brain
->>>>>>> 9e4cb7ff7b90bb532e25427257e37bcf4325ebeb
+This is the overview file. it lays out the flow for p-brain.
+
+
+to launch the use provides up to 4 functions, a CanvasId, and a World:
+
+draw : World CanvasContex ->
+    This function controls drawing to the given canvas, pulled from the canvas id
+    for now the context is only 2d     
+
+
+tick : World -> datum
+    recreates the datum, which will then be drawn(?)
+
+key : World KeyEvent -> World
+    recreates the World on key event
+
+mouse : World event num num -> World
+    recreates the World based on an key event code and the coord that it happend on
+
+
+
+
+LOW LEVEL:
+
+
+data:
+    a PBrane is an class
+        state is the current World
+        key is an array as queue of KeyEventCodes since the last tick cycle
+        mouse is an array as queue of MouseEvents, where a mouse event is an array with the first the code, the second the X, and the third the Y
+        tick is the tick function
+        key is the key function
+        mouse is the mouse function
+        draw is the draw function
+
+
+launch : World, CanvasId, draw, tick = null, key = null, mouse = null
+
+launches PBrane
+
+addKeyEventListener : PBrane ->
+    lauches a key event listener that adds key event to that PBranes queue
+addMouseEventListener : PBrane ->
+    lauches a mouse event listener that adds key event to that PBranes queue
+
+
+runThrough : PBrane ->
+    Deals with a tick, the possibilty of keyevents and mouse events, and drawing
+
+tick : PBrain ->
+    ticks that brane
+draw : PBrain ->
+    draws the brane
+key : PBrain ->
+    handles all key events in that brane, clears the que
+mouse : PBrain ->
+    handles all mouse events in that brane, clears the que
