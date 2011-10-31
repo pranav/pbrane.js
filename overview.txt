@@ -24,34 +24,39 @@ LOW LEVEL:
 
 
 data:
-    a PBrane is an class
+    a PBrain is an class
         state is the current World
-        key is an array as queue of KeyEventCodes since the last tick cycle
-        mouse is an array as queue of MouseEvents, where a mouse event is an array with the first the code, the second the X, and the third the Y
+        id is the canvasId
+        eventQ is an array as queue KeyEvent or of MouseEvents
         tick is the tick function
-        key is the key function
-        mouse is the mouse function
+        onKey is the key function
+        onMouse is the mouse function
         draw is the draw function
+        inFocus is a boolean. is the canvas in focus?
+
+A MouseEvent is a class with a type, id, x, y
+
+A Key Event is a class with a type and an id
+        
 
 
-launch : World, CanvasId, draw, tick = null, key = null, mouse = null
+launch : World, CanvasId, draw, tick = null, key = null, mouse = null ->
 
-launches PBrane
+launches PBrain
 
-addKeyEventListener : PBrane ->
-    lauches a key event listener that adds key event to that PBranes queue
-addMouseEventListener : PBrane ->
-    lauches a mouse event listener that adds key event to that PBranes queue
+addKeyEventListener : PBrain ->
+    lauches a key event listener that adds key event to that PBrains queue
+addMouseEventListener : PBrain ->
+    lauches a mouse event listener that adds key event to that PBrains queue
 
 
-runThrough : PBrane ->
+runThrough : PBrain ->
     Deals with a tick, the possibilty of keyevents and mouse events, and drawing
 
 tick : PBrain ->
-    ticks that brane
+    ticks that brain
 draw : PBrain ->
     draws the brane
-key : PBrain ->
-    handles all key events in that brane, clears the que
-mouse : PBrain ->
-    handles all mouse events in that brane, clears the que
+handleEvents : PBrain ->
+    handles all events in that brain, clears the que
+
