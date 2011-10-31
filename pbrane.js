@@ -1,5 +1,4 @@
 var brain = null;
-var handlers = new Array(); // list of handlers. who needs scope?
 //the PBrane class
 function PBrain(state, canvasId, draw, tick, key, mouse){
     this.state = state;
@@ -48,14 +47,11 @@ addKeyEventListener : PBrain ->
 function addKeyEventListener(brain) {
     events = ["keyup", "keydown"];
     for(ev in events){  
-        var keyer = function (e) {
-            alert("Keyered");
+        document.getElementById(brain.id).addEventListener(ev,function (e) {
             if(brain.inFocus){
                 brain.eventQ.push(new KeyEvent(e.keyCode,ev));
             }
-        }
-        handlers.push(keyer);
-        document.getElementById(brain.id).addEventListener(ev,hanlders[handlers.length - 1]);
+        });
     }
 }
 /*
@@ -65,13 +61,13 @@ addMouseEventListener : PBrain ->
 function addMouseEventListener(brain) {
     events = ["mousedown", "mousemove", "mouseup"];
     for(ev in events){  
-        var mouser = function (e) {
+
+        handlers.push(mouser);
+        addEventListener(ev,function (e) {
             if(brain.inFocus){
                 brain.eventQ.push(new MouseEvent()); //TODO creating the mouse event class
             }
-        }
-        handlers.push(mouser);
-        addEventListener(ev,hanlders[handlers.length - 1]);
+        });
     }
 }
 
