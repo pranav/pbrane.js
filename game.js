@@ -120,14 +120,30 @@ var heroHitsMonster = function() {
 
 // Mechanics for the monster running from hero
 var monsterRunsFromHero = function(modifier) {
-    if(monster.x + monsterImage.width/2 > hero.x + heroImage.width/2 && monster.x > canvas.width - monsterImage.width)
-        monster.x += monster.speed * modifier;
-    if(monster.x + monsterImage.width/2 < hero.x + heroImage.width/2 && monster.x > 0)
-        monster.x -= monster.speed * modifier;
-    if(monster.y + monsterImage.height/2 > hero.y + heroImage.height/2 && monster.y < canvas.height - monsterImage.height)
-        monster.y += monster.speed * modifier;
-    if(monster.y + monsterImage.height/2 < hero.y + heroImage.height/2  && monster.y > 0)
-        monster.y -= monster.speed * modifier;
+    if(monster.x <= hero.x && monster.x >= 0)
+        moveMonsterLeft(modifier);
+    if(monster.x >= hero.x && monster.x + monsterImage.width < canvas.width)
+        moveMonsterRight(modifier);
+    if(monster.y >= hero.y && monster.y + monsterImage.height < canvas.height)
+        moveMonsterDown(modifier);
+    if(monster.y <= hero.y && monster.y > 0)
+        moveMonsterUp(modifier);
+}
+
+var moveMonsterLeft = function(m) {
+    monster.x -= monster.speed * m;
+}
+
+var moveMonsterRight = function(m) {
+    monster.x += monster.speed * m;
+}
+
+var moveMonsterUp = function(m) {
+    monster.y -= monster.speed * m;
+}
+
+var moveMonsterDown = function(m) {
+    monster.y += monster.speed * m;
 }
 
 // Spawns a new monster on the map
