@@ -1,18 +1,22 @@
 function toDraw(w, ctx){
-    ctx.fillRect(300, w, 50,50);
-}   
+    var rocket = new Image();
+    rocket.src = '/p-brain.js/images/rocket.jpg';
+    ctx.drawImage(rocket, 300, w);
+}
+
 
 function nextWorld(w) {
     return (w + 1) % 600;
+    
 }
 
 function keyhandler(w, k) {
-    return w;
+    return w - 5;
 }
 
 function mousehandler(w,e,x,y) {
     return w;
 }
 
-launch(0, "testcanvas", toDraw, nextWorld, keyhandler, mousehandler);
+launch(600, "testcanvas", toDraw, nextWorld, keyhandler, mousehandler);
 

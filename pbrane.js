@@ -34,19 +34,26 @@ function launch(state, canvasId, draw, tick, key, mouse){
     addMouseEventListener(brain);
     setInterval("runThrough(brain)",1);
 }
+var keyer = function (e) {
+    if(brain.inFocus){
+        brain.eventQ.push(new KeyEvent(e.keyCode,"keydown"));
+    }
+}
+//addEventListener("keydown",keyer);
 /*
 addKeyEventListener : PBrain ->
     lauches a key event listener that adds key event to that PBranes queue
 */
 function addKeyEventListener(brain) {
-    events = ["keydown", "keydown"];
+    events = ["keyup", "keydown"];
     for(ev in events){  
         var keyer = function (e) {
+            alert("Keyered");
             if(brain.inFocus){
                 brain.eventQ.push(new KeyEvent(e.keyCode,ev));
             }
         }
-        addEventListener(ev,keyer);
+        document.getElementById(brain.id).addEventListener(ev,keyer);
     }
 }
 /*
@@ -106,7 +113,7 @@ function handleEvents(brain){
         if(e instanceof MouseEvent){
             brain.state = brain.onMouse(brain.state, e.id, e.x, e.y);
         } else {
-            brain.state = brain.onKey(brane.state, e);
+            brain.state = brain.onKey(brain.state, e);
         }
     } 
     brain.eventQ = new Array();
