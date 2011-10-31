@@ -56,11 +56,11 @@ var render = function () {
 
 // Draws the position of hero on the screen
 var drawPos = function() {
-    ctx.fillStyle = "#00FF00";
+    ctx.fillStyle = "#FF0000";
     ctx.font = "24px Helvetica";
     ctx.textAlign = "left";
     ctx.textBaseAlign = "top";
-    ctx.fillText("X: " + monster.x + " Y: " + monster.y, 32, 32);
+    ctx.fillText("Kills: " + kills, 32, 32);
 }
 
 /////////////////////////////////////////////
@@ -79,6 +79,8 @@ var monster = {
     x: 0,
     y: 0
 };
+
+var kills = 0;
 
 // Key-handlers
 var keysDown = {};
@@ -113,8 +115,11 @@ var heroHitsMonster = function() {
     if(hero.x <= (monster.x + monsterImage.width)
         && monster.x <= hero.x + heroImage.width
         && hero.y <= (monster.y + monsterImage.height)
-        && monster.y <= (hero.y + heroImage.height))
-        newMonster();
+        && monster.y <= (hero.y + heroImage.height)){
+        newMonster();        
+        kills++;
+    }
+
 
 }
 
