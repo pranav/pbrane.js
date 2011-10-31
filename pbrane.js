@@ -54,7 +54,8 @@ addMouseEventListener : PBrain ->
     lauches a mouse event listener that adds key event to that PBranes queue
 */
 function addMouseEventListener(brain) {
-    var mevents = ["click", "mousedown", /*"mousemove",*/ "mouseup"];
+    var mevents = ["click", "mousedown", "mousemove", "mouseup","touchstart",
+    "touchmove","touchend", "drag"];
     for(i in mevents){
         var me = mevents[i];
         addEventListener(me,function(_me){
