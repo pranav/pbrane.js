@@ -55,10 +55,10 @@ function keyhandler(w, k) {
     return w;
 }
 
-function mousehandler(w,e,x,y) {
-    if(e == "click"){
-        w.mousePos.x = x;
-        w.mousePos.y = y;
+function mousehandler(w,t,e) {
+    if(t == "click"){
+        w.mousePos.x = e.x;
+        w.mousePos.y = e.y;
     }
     return w;
 }

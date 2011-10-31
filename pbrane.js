@@ -11,16 +11,14 @@ function PBrain(state, canvasId, draw, tick, key, mouse){
     this.inFocus = true; //FIXME
 }
 // struct for mouse events
-function MouseEvent(id,type,x,y){
-    this.id = id;
+function MouseEvent(type,event){
     this.type = type;
-    this.x = x;
-    this.y = y
+    this.event = event;
 }
 // struct for key events
-function KeyEvent(id,type){
-    this.id = id;
+function KeyEvent(type,event){
     this.type = type;
+    this.event = event;
 }
 
 /*
@@ -43,11 +41,12 @@ function addKeyEventListener(brain) {
     var kevents = ["keyup", "keydown"];
     for(i in kevents){
         var ke = kevents[i];
-        addEventListener(ke,function (e) {
-            if(brain.inFocus){
-             brain.eventQ.push(new KeyEvent(e.keyCode,ke));
-            }
-         });
+        addEventListener(ke,function(_ke){
+            return function (e) {
+                if(brain.inFocus){
+                    brain.eventQ.push(new KeyEvent(_ke,e.keyCode));
+                }
+        }}(ke));
     }
 }
 /*
@@ -55,14 +54,15 @@ addMouseEventListener : PBrain ->
     lauches a mouse event listener that adds key event to that PBranes queue
 */
 function addMouseEventListener(brain) {
-    var kevents = ["mousedown", "mousemove", "mouseup", "click"];
-    for(i in kevents){
-        var ke = kevents[i];
-        addEventListener(ke,function (e) {
-           if(brain.inFocus){
-                brain.eventQ.push(new MouseEvent(ke,e.button,e.x,e.y));
-            }
-        });
+    var mevents = ["click", "mousedown", /*"mousemove",*/ "mouseup"];
+    for(i in mevents){
+        var me = mevents[i];
+        addEventListener(me,function(_me){
+            return function (e) {
+                if(brain.inFocus){
+                   brain.eventQ.push(new MouseEvent(_me,e));
+                }
+        }}(me));
     }
 }
 
@@ -106,9 +106,9 @@ function handleEvents(brain){
     for(i in brain.eventQ){
         var e = brain.eventQ[i];
         if(e instanceof MouseEvent){
-            brain.state = brain.onMouse(brain.state, e.id, e.x, e.y);
+            brain.state = brain.onMouse(brain.state, e.type, e.event);
         } else {
-            brain.state = brain.onKey(brain.state, e);
+            brain.state = brain.onKey(brain.state, e.type, e.event);
         }
     } 
     brain.eventQ = new Array();

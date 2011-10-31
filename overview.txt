@@ -11,10 +11,10 @@ draw : World CanvasContex ->
 tick : World -> datum
     recreates the datum, which will then be drawn(?)
 
-key : World KeyEvent -> World
+key : World KeyEventString KeyEvent -> World
     recreates the World on key event
 
-mouse : World event num num -> World
+mouse : World MouseEventString MouseEvent -> World
     recreates the World based on an key event code and the coord that it happend on
 
 
