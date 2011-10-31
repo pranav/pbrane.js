@@ -1,6 +1,6 @@
 function toDraw(w, ctx){
     var rocket = new Image();
-    rocket.src = '/p-brain.js/images/rocket.jpg';
+    rocket.src = '/p-brain.js/images/ally.png';
     ctx.drawImage(rocket, 300, w);
 }
 
@@ -11,6 +11,7 @@ function nextWorld(w) {
 }
 
 function keyhandler(w, k) {
+
     return w - 5;
 }
 

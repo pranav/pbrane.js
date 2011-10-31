@@ -48,6 +48,7 @@ function addKeyEventListener(brain) {
     events = ["keyup", "keydown"];
     for(ev in events){  
         document.getElementById(brain.id).addEventListener(ev,function (e) {
+            alert("PRES");
             if(brain.inFocus){
                 brain.eventQ.push(new KeyEvent(e.keyCode,ev));
             }
@@ -60,9 +61,7 @@ addMouseEventListener : PBrain ->
 */
 function addMouseEventListener(brain) {
     events = ["mousedown", "mousemove", "mouseup"];
-    for(ev in events){  
-
-        handlers.push(mouser);
+    for(ev in events){
         addEventListener(ev,function (e) {
             if(brain.inFocus){
                 brain.eventQ.push(new MouseEvent()); //TODO creating the mouse event class
