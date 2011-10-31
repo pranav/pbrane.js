@@ -93,7 +93,7 @@ draw : PBrain ->
 function draw(brain){
     var element = document.getElementById(brain.id);
     var ctx = element.getContext("2d");
-    ctx.fillRect(0,0,document.getElementById(brain.id),document.getElementById(brain.id),"#ffffff");
+    ctx.clearRect(0,0,element.width,element.height);
     brain.draw(brain.state, ctx); //FIXME why null pranav?
 }
 
