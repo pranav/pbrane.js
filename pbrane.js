@@ -34,25 +34,20 @@ function launch(state, canvasId, draw, tick, key, mouse){
     addMouseEventListener(brain);
     setInterval("runThrough(brain)",1);
 }
-var keyer = function (e) {
-    if(brain.inFocus){
-        brain.eventQ.push(new KeyEvent(e.keyCode,"keydown"));
-    }
-}
-//addEventListener("keydown",keyer);
+
 /*
 addKeyEventListener : PBrain ->
     lauches a key event listener that adds key event to that PBranes queue
 */
 function addKeyEventListener(brain) {
-    events = ["keyup", "keydown"];
-    for(ev in events){  
-        document.getElementById(brain.id).addEventListener(ev,function (e) {
-            alert("PRES");
+    var kevents = ["keyup", "keydown"];
+    for(i in kevents){
+        var ke = kevents[i];
+        addEventListener(ke,function (e) {
             if(brain.inFocus){
-                brain.eventQ.push(new KeyEvent(e.keyCode,ev));
+             brain.eventQ.push(new KeyEvent(e.keyCode,ke));
             }
-        });
+         });
     }
 }
 /*
@@ -60,11 +55,12 @@ addMouseEventListener : PBrain ->
     lauches a mouse event listener that adds key event to that PBranes queue
 */
 function addMouseEventListener(brain) {
-    events = ["mousedown", "mousemove", "mouseup"];
-    for(ev in events){
-        addEventListener(ev,function (e) {
-            if(brain.inFocus){
-                brain.eventQ.push(new MouseEvent()); //TODO creating the mouse event class
+    var kevents = ["mousedown", "mousemove", "mouseup"];
+    for(i in kevents){
+        var ke = kevents[i];
+        addEventListener(ke,function (e) {
+           if(brain.inFocus){
+                brain.eventQ.push(new MouseEvent(ke,e.button,e.x,e.y));
             }
         });
     }
@@ -99,15 +95,16 @@ function draw(brain){
     var element = document.getElementById(brain.id);
     var ctx = element.getContext("2d");
     ctx.clearRect(0,0,element.width,element.height);
-    brain.draw(brain.state, ctx); //FIXME why null pranav?
+    brain.draw(brain.state, ctx);
 }
 
 /*
 handleEvents : PBrain ->
-    handles all events in that brane, clears the que
+    handles all events in that brane, clears the queue
 */
 function handleEvents(brain){
-    for(e in brain.eventQ){
+    for(i in brain.eventQ){
+        var e = brain.eventQ[i];
         if(e instanceof MouseEvent){
             brain.state = brain.onMouse(brain.state, e.id, e.x, e.y);
         } else {

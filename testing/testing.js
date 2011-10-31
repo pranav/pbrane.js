@@ -16,7 +16,7 @@ function keyhandler(w, k) {
 }
 
 function mousehandler(w,e,x,y) {
-    return w;
+    return w - 5;
 }
 
 launch(600, "testcanvas", toDraw, nextWorld, keyhandler, mousehandler);
