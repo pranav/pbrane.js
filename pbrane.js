@@ -8,7 +8,7 @@ function PBrain(state, canvasId, draw, tick, key, mouse){
     this.onKey = key;
     this.onMouse = mouse;
     this.eventQ = new Array();
-    this.inFocus = false;
+    this.inFocus = true; //FIXME
 }
 // struct for mouse events
 function MouseEvent(id,type,x,y){
@@ -27,9 +27,9 @@ function KeyEvent(id,type){
 launch : World, CanvasId, draw, tick = null, key = null, mouse = null ->
     launches PBrane
 */
-function launch(state, canvasId, draw, tick = null, key = null, mouse = null){
-    brain = new PBrain(state, canvasID, draw, tick, key, mouse);
-    addEventListener("focus", function (e) {} ); //FIXME
+function launch(state, canvasId, draw, tick, key, mouse){
+    brain = new PBrain(state, canvasId, draw, tick, key, mouse);
+    addEventListener("focus", function (e) {} ); //FIXME Figure out how to handle focusing
     addKeyEventListener(brain);
     addMouseEventListener(brain);
     setInterval("runThrough(brain)",1);
@@ -91,7 +91,10 @@ draw : PBrain ->
     draws the brane
 */
 function draw(brain){
-    brain.draw(brain.state, document.getElementById(brane.id).getContext("2d")); //FIXME why null pranav?
+    var element = document.getElementById(brain.id);
+    var ctx = element.getContext("2d");
+    ctx.fillRect(0,0,document.getElementById(brain.id),document.getElementById(brain.id),"#ffffff");
+    brain.draw(brain.state, ctx); //FIXME why null pranav?
 }
 
 /*
