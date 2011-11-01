@@ -1,0 +1,31 @@
+This is the Documentation for the HTML5 Javascript game library 'P-Brain.'
+
+
+
+To create a game the library needs six things:
+
+The World:
+    this is some datum that represents all data in the game. Every game function will take in this world, and return it with modifications (with the exception of drawing).
+The CanvasId:
+    The unique id for a DOM canvas object. The game will render to this canvas.
+Drawer:
+    World CanvasContext -> [void]
+    This function will be called by P-Brain to draw the current world. Before each call to this function the canvas is reset to be completely white.
+    the CanvasContext is
+Ticker:
+    World -> World
+    This function is called every millisecond(or as fast as your browser will allow). The result will become the new world, which is then rendered.
+KeyHandler:
+    World, KeyEventString, KeyEvent -> World
+    This function is called for every key event.
+    The KeyEventString is the string that represents the DOM event (ie "keydown", "keyup")
+    The KeyEvent is the actual event
+MouseHandler:
+    World, MouseventString, MouseEvent -> World
+    This function is called for every key event.
+    The MouseventString is the string that represents the DOM event (ie "click", "mousedown")
+    The MouseEvent is the actual event
+    
+    
+To launch the game include the p-brain.js file, write you functions, then in your canvas tag add:
+onload="launch(<world>,<canvasid>,<drawer>,<ticker>,<keyhandler>,<mousehandler>);"
