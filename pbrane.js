@@ -111,6 +111,7 @@ function handleEvents(brain){
         } else {
             brain.state = brain.onKey(brain.state, e.type, e.event);
         }
+        //draw(brain);
     } 
     brain.eventQ = new Array();
 }

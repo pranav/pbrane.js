@@ -75,8 +75,8 @@ function keyhandler(w, k) {
 
 function mousehandler(w,t,e) {
     if(t == "click" || t == "drag"){
-        w.mousePos.x = e.x;
-        w.mousePos.y = e.y;
+        w.mousePos.x = e.x - w.hero.image.width/2;
+        w.mousePos.y = e.y - w.hero.image.height/2;
     }else if(t == "touchmove"){
         w.mousePos.x = e.targetTouches[0].pageX;    
         w.mousePos.y = e.targetTouches[0].pageY;
