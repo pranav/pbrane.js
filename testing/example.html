@@ -4,7 +4,8 @@
 <script type='text/javascript' src='example.js'></script>
 
 </head>
-<body>
-<canvas id="testcanvas" width="704" height="396" onload='launch(initialWorld(), "testcanvas", toDraw, nextWorld, keyhandler, mousehandler);'></canvas>
+<body onload='launch(initialWorld(), "testcanvas", toDraw, nextWorld, keyhandler, mousehandler);'>
+<canvas id="testcanvas" width="704" height="396"></canvas>
+<div><form><input type="reset"/></form></div>
 </body>
 </html>

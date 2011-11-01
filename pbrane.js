@@ -8,7 +8,9 @@ function PBrain(state, canvasId, draw, tick, key, mouse){
     this.onKey = key;
     this.onMouse = mouse;
     this.eventQ = new Array();
-    this.inFocus = true; //FIXME
+    this.inFocus = function() {
+        return true; //document.activeElement.getAttribute("id") == this.id; FIXME
+    }
 }
 // struct for mouse events
 function MouseEvent(type,event){
@@ -27,8 +29,6 @@ launch : World, CanvasId, draw, tick = null, key = null, mouse = null ->
 */
 function launch(state, canvasId, draw, tick, key, mouse){
     brain = new PBrain(state, canvasId, draw, tick, key, mouse);
-    addEventListener("DOMFocusIn", function (e) {brain.inFocus = true;});
-    addEventListener("DOMFocusOut", function (e) {brain.inFocus = false;});
     addKeyEventListener(brain);
     addMouseEventListener(brain);
     setInterval("runThrough(brain)",1);
@@ -42,9 +42,9 @@ function addKeyEventListener(brain) {
     var kevents = ["keyup", "keydown"];
     for(i in kevents){
         var ke = kevents[i];
-        addEventListener(ke,function(_ke){
+        document.getElementById(brain.id).addEventListener(ke,function(_ke){
             return function (e) {
-                if(brain.inFocus){
+                if(brain.inFocus()){
                     brain.eventQ.push(new KeyEvent(_ke,e.keyCode));
                 }
         }}(ke));
@@ -61,7 +61,7 @@ function addMouseEventListener(brain) {
         var me = mevents[i];
         addEventListener(me,function(_me){
             return function (e) {
-                if(brain.inFocus){
+                if(brain.inFocus()){
                    brain.eventQ.push(new MouseEvent(_me,e));
                 }
         }}(me));
