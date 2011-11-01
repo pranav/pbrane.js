@@ -27,7 +27,8 @@ launch : World, CanvasId, draw, tick = null, key = null, mouse = null ->
 */
 function launch(state, canvasId, draw, tick, key, mouse){
     brain = new PBrain(state, canvasId, draw, tick, key, mouse);
-    addEventListener("focus", function (e) {} ); //FIXME Figure out how to handle focusing
+    addEventListener("DOMFocusIn", function (e) {brain.inFocus = true;});
+    addEventListener("DOMFocusOut", function (e) {brain.inFocus = false;});
     addKeyEventListener(brain);
     addMouseEventListener(brain);
     setInterval("runThrough(brain)",1);

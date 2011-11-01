@@ -99,5 +99,5 @@ function initialWorld(){
 }
 
 // Start this thing up
-launch(initialWorld(), "testcanvas", toDraw, nextWorld, keyhandler, mousehandler);
+
 

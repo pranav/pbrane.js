@@ -1,10 +1,10 @@
 <html>
 <head><title>Testing</title>
 <script src="/p-brain.js/pbrane.js" type="text/javascript"></script>
+<script type='text/javascript' src='example.js'></script>
 
 </head>
 <body>
-<canvas id="testcanvas" width="704" height="396"></canvas>
-<script type='text/javascript' src='testing.js'></script>
+<canvas id="testcanvas" width="704" height="396" onload='launch(initialWorld(), "testcanvas", toDraw, nextWorld, keyhandler, mousehandler);'></canvas>
 </body>
 </html>
