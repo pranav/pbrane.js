@@ -1,16 +1,33 @@
-// Prevents iOS devices from scrolling
+// Some Constants
 var SPEED = 1;
-document.getElementById("testcanvas").ontouchmove = function(e){
+var canvasId = "testcanvas";
+
+// Prevents iOS devices from scrolling
+document.getElementById(canvasId).ontouchmove = function(e){
     e.preventDefault();
 }
 
 /* 
-Data definition */
+Data definition 
+A Monster is the enemy of the world
+A Hero is the protagonist
+A mousePos is the Posn where the mouse was last clicked
+A bg is the Background image for the canvas
+A Bullets is an array of Bullet
+
+*/
 function World(){
     this.monster = new Monster();
     this.hero = new Hero();
     this.mousePos = new Posn(0,0);
     this.bg = new Image();
+    this.bullets = new Array();
+}
+
+// Represents a projectile
+function Bullet(x,y){
+    this.posn = new Posn(x,y);
+    this.image = new Image();
 }
 
 // Represents a position on the canvas
@@ -46,21 +63,36 @@ function toDraw(w, scn){
 // nextWorld : World -> World
 // Calculates the next world
 function nextWorld(w) {
+    moveToPosn(w);
+    return w;
+}
+// moveToPosn : World -> World
+// Moves the hero to the mousePos
+function moveToPosn(w){
     var dir = new Posn(
             (w.mousePos.x-w.hero.pos.x),
             (w.mousePos.y-w.hero.pos.y));
     var dist = magnitude(dir.x,dir.y);
-    if (dist == 0){
-        return w;
-    }
+    
+    if (dist == 0) return w;
+    
     w.hero.pos.x += (dir.x / dist) * w.hero.speed;
     w.hero.pos.y += (dir.y / dist) * w.hero.speed;
+    
     if(dist < magnitude((w.mousePos.x-w.hero.pos.x),(w.mousePos.y-w.hero.pos.y))){
         w.hero.pos.x = w.mousePos.x;
         w.hero.pos.y = w.mousePos.y;
-        
     }
     return w;
+}
+// outofBounds : [Hero|Monster] -> Boolean
+// Checks if the hero or monster is outside the canvas
+function outofBounds(e){
+    var c = document.getElementById(canvasId);
+    return e.x > c.width ||
+        e.x < 0 ||
+        e.y > c.height ||
+        e.y < 0;
 }
 
 function magnitude(x,y){
@@ -73,6 +105,8 @@ function keyhandler(w, k) {
     return w;
 }
 
+// mousehandler : World String EventData -> World
+// Handles mouse interaction
 function mousehandler(w,t,e) {
     if(t == "click" || t == "drag"){
         w.mousePos.x = e.x - w.hero.image.width/2;
@@ -91,13 +125,13 @@ function initialWorld(){
     w.hero.pos.x = 300;
     w.hero.pos.y = 300;
     w.hero.image.src = '/p-brain.js/images/ally.png';
-    w.monster.pos.x = 400;
-    w.monster.pos.y = 400;
+    w.monster.pos.x = 200;
+    w.monster.pos.y = 200;
     w.monster.image.src = '/p-brain.js/images/logo.png';
     w.bg.src = '/p-brain.js/images/bg.jpg';
     return w;
 }
 
 // Start this thing up
-launch(initialWorld(), "testcanvas", toDraw, nextWorld, keyhandler, mousehandler);
+launch(initialWorld(), canvasId, toDraw, nextWorld, keyhandler, mousehandler);
 
