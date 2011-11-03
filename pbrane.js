@@ -10,7 +10,7 @@ function PBrain(state, canvasId, draw, tick, key, mouse){
     this.eventQ = new Array();
     this.inFocus = function() {
         return true; //document.activeElement.getAttribute("id") == this.id; FIXME
-    }
+    };
 }
 // struct for mouse events
 function MouseEvent(type,event){
@@ -47,7 +47,7 @@ function addKeyEventListener(brain) {
                 if(brain.inFocus()){
                     brain.eventQ.push(new KeyEvent(_ke,e.keyCode));
                 }
-        }}(ke));
+        };}(ke));
     }
 }
 /*
@@ -64,7 +64,7 @@ function addMouseEventListener(brain) {
                 if(brain.inFocus()){
                    brain.eventQ.push(new MouseEvent(_me,e));
                 }
-        }}(me));
+        };}(me));
     }
 }
 
@@ -84,7 +84,7 @@ tick : PBrain ->
     ticks that brane
 */
 function tick(brain){
-    if(brain.tick != null){
+    if(brain.tick){
         brain.state = brain.tick(brain.state);
     }
 }
@@ -107,9 +107,9 @@ handleEvents : PBrain ->
 function handleEvents(brain){
     for(i in brain.eventQ){
         var e = brain.eventQ[i];
-        if(e instanceof MouseEvent){
+        if(e instanceof MouseEvent && brain.onMouse){
             brain.state = brain.onMouse(brain.state, e.type, e.event);
-        } else {
+        } else if(brain.onKey){
             brain.state = brain.onKey(brain.state, e.type, e.event);
         }
         //draw(brain);

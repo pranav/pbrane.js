@@ -14,28 +14,23 @@ A Bullets is an array of Bullet
 function World(){
     this.monster = new Monster();
     this.hero = new Hero();
-    this.mousePos = new Posn(0,0);
+    this.mousePos = new Vector2D(0,0);
     this.bg = new Image();
     this.bullets = new Array();
 }
 
 // Represents a projectile
 function Bullet(x,y){
-    this.posn = new Posn(x,y);
+    this.posn = new Vector2D(x,y);
     this.image = new Image();
 }
 
-// Represents a position on the canvas
-function Posn(x,y){
-    this.x = x;
-    this.y = y;
-}
 
 // A Monster represents the antagonist
 function Monster(){
     // this.pos is a Posn
     this.speed = SPEED;
-    this.pos = new Posn(0,0);
+    this.pos = new Vector2D(0,0);
     this.image = new Image();
 }
 
@@ -43,7 +38,7 @@ function Monster(){
 function Hero(){
     // this.pos is a Posn
     this.speed = SPEED;
-    this.pos = new Posn(0,0);
+    this.pos = new Vector2D(0,0);
     this.image = new Image();
 }
 
@@ -64,20 +59,7 @@ function nextWorld(w) {
 // moveToPosn : World -> World
 // Moves the hero to the mousePos
 function moveToPosn(w){
-    var dir = new Posn(
-            (w.mousePos.x-w.hero.pos.x),
-            (w.mousePos.y-w.hero.pos.y));
-    var dist = magnitude(dir.x,dir.y);
-    
-    if (dist == 0) return w;
-    
-    w.hero.pos.x += (dir.x / dist) * w.hero.speed;
-    w.hero.pos.y += (dir.y / dist) * w.hero.speed;
-    
-    if(dist < magnitude((w.mousePos.x-w.hero.pos.x),(w.mousePos.y-w.hero.pos.y))){
-        w.hero.pos.x = w.mousePos.x;
-        w.hero.pos.y = w.mousePos.y;
-    }
+    w.hero.pos = w.hero.pos.moveTo(w.mousePos, w.hero.speed);
     return w;
 }
 // outofBounds : [Hero|Monster] -> Boolean
@@ -90,10 +72,6 @@ function outofBounds(e){
         e.y < 0;
 }
 
-function magnitude(x,y){
-    return Math.sqrt(Math.pow(x,2) + Math.pow(y,2));
-}
-
 // keyhandler : World Key -> World
 // Decides what to do based on the given key / world
 function keyhandler(w, k) {
@@ -104,24 +82,30 @@ function keyhandler(w, k) {
 // Handles mouse interaction
 function mousehandler(w,t,e) {
     if(t == "click"){
-        w.mousePos.x = e.x - w.hero.image.width/2;
-        w.mousePos.y = e.y - w.hero.image.height/2;
+    	w.mousePos = new Vector2D(e.x,e.y);
+        imageShift(w.mousePos,w.hero.image);
     }else if(t == "touchmove"){
-        w.mousePos.x = e.targetTouches[0].pageX;    
-        w.mousePos.y = e.targetTouches[0].pageY;
+        w.mousePos = new Vector2D(e.targetTouches[0].pageX, e.targetTouches[0].pageY);
+        imageShift(w.mousePos,w.hero.image);
     }
     return w;
+}
+
+// Vector2D Image ->
+// accounts for images location being top left
+function imageShift(v,i){
+	v.x -= i.width/2;
+	v.y -= i.height/2;
 }
 
 // InitialWorld : -> World
 // Creates the first world
 function initialWorld(){
     var w = new World();
-    w.hero.pos.x = 300;
-    w.hero.pos.y = 300;
+    w.hero.pos = new Vector2D(300,300);
     w.hero.image.src = '/p-brain.js/images/ally.png';
     w.monster.pos.x = 200;
-    w.monster.pos.y = 200;
+    w.monster.pos = new Vector2D(200,200);
     w.monster.image.src = '/p-brain.js/images/logo.png';
     w.bg.src = '/p-brain.js/images/bg.jpg';
     return w;

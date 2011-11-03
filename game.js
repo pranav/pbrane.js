@@ -22,7 +22,7 @@ var bgReady = false;
 var bgImage = new Image();
 bgImage.onload = function() {
     bgReady = true;
-}
+};
 bgImage.src = "images/bg.jpg"; 
 
 // Hero Image
@@ -30,7 +30,7 @@ var heroReady = false;
 var heroImage = new Image();
 heroImage.onload = function() {
     heroReady = true;
-}
+};
 heroImage.src = "images/jon.png";
 
 // Monster Image
@@ -38,7 +38,7 @@ var monsterReady = false;
 var monsterImage = new Image();
 monsterImage.onload = function() {
     monsterReady = true;
-}
+};
 monsterImage.src = "images/ally.png";
 
 // Render the world
@@ -52,7 +52,7 @@ var render = function () {
         ctx.drawImage(heroImage, hero.x, hero.y);
        
     drawPos();   
-}
+};
 
 // Draws the position of hero on the screen
 var drawPos = function() {
@@ -61,7 +61,7 @@ var drawPos = function() {
     ctx.textAlign = "left";
     ctx.textBaseAlign = "top";
     ctx.fillText("Kills: " + kills, 32, 32);
-}
+};
 
 /////////////////////////////////////////////
 // Logic
@@ -108,7 +108,7 @@ var nextWorld = function(modifier) {
         
     monsterRunsFromHero(modifier);
     heroHitsMonster();      
-}
+};
 
 // if the hero hits the monster, then respawn the monster
 var heroHitsMonster = function() {
@@ -121,7 +121,7 @@ var heroHitsMonster = function() {
     }
 
 
-}
+};
 
 // Mechanics for the monster running from hero
 var monsterRunsFromHero = function(modifier) {
@@ -133,36 +133,36 @@ var monsterRunsFromHero = function(modifier) {
         moveMonsterDown(modifier);
     if(monster.y <= hero.y && monster.y > 0)
         moveMonsterUp(modifier);
-}
+};
 
 var moveMonsterLeft = function(m) {
     monster.x -= monster.speed * m;
-}
+};
 
 var moveMonsterRight = function(m) {
     monster.x += monster.speed * m;
-}
+};
 
 var moveMonsterUp = function(m) {
     monster.y -= monster.speed * m;
-}
+};
 
 var moveMonsterDown = function(m) {
     monster.y += monster.speed * m;
-}
+};
 
 // Spawns a new monster on the map
 var newMonster = function() {
 	monster.x = monsterImage.width + (Math.random() * (canvas.width - monsterImage.width*2));
 	monster.y = monsterImage.height + (Math.random() * (canvas.height - monsterImage.height*2));
-} 
+};
 
 // The initial world state
 var initWorld = function() {
     hero.x = canvas.width / 2;
     hero.y = canvas.height / 2;
     newMonster();
-}
+};
 
 // The big bang
 var bigbang = function() {
@@ -176,7 +176,7 @@ var bigbang = function() {
     render();
     
     then = now;
-}
+};
 initWorld();
 var then = Date.now();
 setInterval(bigbang, 1);

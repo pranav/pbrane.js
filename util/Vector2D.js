@@ -6,18 +6,28 @@ function Vector2D(x,y){
     this.sub = sub;
     this.moveTo = moveTo;
     this.mult = mult;
-    this.length = length;
+    this.magnitude = magnitude;
     this.unit = unit;
     this.rotate = rotate;
 }
 
 // All following functions are methods of the 2DVector class
 
+// Vector -> boolean
+// this and that have same x,y
+function equals(v){
+	return this.x == v.x && this.y == v.y;
+}
 
 //Vector, Number -> Vector
 //produces a Vector moved n towards the given vector
 function moveTo(v,d){
-    return this.add(v.sub(this).unit().mult(d));
+	var dir = v.sub(this);
+	if(dir.magnitude() > d){
+    	return this.add(dir.unit().mult(d));
+	} else {
+		return v;
+	}
 }
 
 //Vector -> Vector
@@ -39,14 +49,14 @@ function mult(n){
 }
 //-> Number
 //gets the length of this vector
-function length(){
+function magnitude(){
     return Math.sqrt(Math.pow(this.x,2) + Math.pow(this.y,2));
 }
 
 //-> Vector
 //gets the unit of this vector
 function unit(){
-    return this.mult(this.length());
+    return this.mult(1/this.magnitude());
 }
 
 //Number Vector -> Vector
