@@ -7,4 +7,4 @@ run:
 	echo 'Build all done. Located at build/pbrain.js'
 
 clean: 
-	rm build/pbrain.js *~
+	rm build/pbrain.js
