@@ -43,5 +43,6 @@ function toDraw(w, scn){
 }
 
 function initialWorld(){
-
+    var w = new World();
+    w.cat.image.src = '/;'
 }
