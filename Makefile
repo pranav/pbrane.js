@@ -1,6 +1,7 @@
 default=run
 
 run: 
+	mkdir build
 	touch build/pbrain.js
 	cat pbrane.js >> build/pbrain.js
 	cat util/Vector2D.js >> build/pbrain.js
@@ -8,3 +9,4 @@ run:
 
 clean: 
 	rm build/pbrain.js
+	rm -rf build
