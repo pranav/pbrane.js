@@ -5,6 +5,7 @@
 var canvas_id = "xmastree";
 var WIDTH = 450;
 var HEIGHT = 750;
+var SPEED = 1;
 
 /** Data definition for a World
  * A World consists of:
@@ -17,11 +18,13 @@ function World(){
 
 /** TreeImage : String Int Int -> TreeImage
  * A TreeImage is a wrapper for Image with an X and Y */
-function TreeImage(image_src, x, y){
+function TreeImage(image_src, x, y, name, speed){
+    this.name = name;
     this.image = new Image();
     this.image.src = image_src;
     this.x = x;
     this.y = y;
+    this.speed = speed;
 }
 
 /** mousehandler : World String MouseEvent -> World
@@ -39,6 +42,18 @@ function keyhandler(w, key, kevent){
 /** nextWorld : World -> World
  * Handles logic for the canvas for each tick cycle */
 function nextWorld(w){
+    var i = 0
+    while(i < w.images.length){
+        var img = w.images[i];
+        if(img.name == "snow"){
+            if(img.y >= HEIGHT)
+                img.y = -50;
+            else
+                img.y += SPEED * img.speed;    
+        }
+        i += 1;
+    }
+    
     return w;
 }
 
@@ -75,13 +90,13 @@ function generateSnow(){
     var r = Math.random();
     if(r < 0.5)
         return new TreeImage('images/snowflakesmall.png', 
-            Math.random()*WIDTH, Math.random()*HEIGHT);
+            Math.random()*WIDTH, Math.random()*HEIGHT, "snow", 3);
     else if (r < 0.7)
         return new TreeImage('images/snowflakemed.png', 
-            Math.random()*WIDTH, Math.random()*HEIGHT);
+            Math.random()*WIDTH, Math.random()*HEIGHT, "snow", 2);
     else
         return new TreeImage('images/snowflakelarge.png',
-            Math.random()*WIDTH, Math.random()*HEIGHT);
+            Math.random()*WIDTH, Math.random()*HEIGHT, "snow", 1);
 }
 
 /** imageMacro : String -> TreeImage
