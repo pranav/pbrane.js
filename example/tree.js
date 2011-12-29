@@ -16,8 +16,10 @@ function World(){
     this.mousePosn = [];
 }
 
-/** TreeImage : String Int Int -> TreeImage
- * A TreeImage is a wrapper for Image with an X and Y */
+/** TreeImage : String Int Int ... [String Int]-> TreeImage
+ * A TreeImage is a wrapper for Image with an X and Y 
+ * Name is an optional argument used for finding a specific image
+ * Speed is an optional argument used to alter speed of falling snow */
 function TreeImage(image_src, x, y, name, speed){
     this.name = name;
     this.image = new Image();
