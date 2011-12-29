@@ -3,6 +3,8 @@
 
 // Constants
 var canvas_id = "xmastree";
+var WIDTH = 450;
+var HEIGHT = 750;
 
 /** Data definition for a World
  * A World consists of:
@@ -54,7 +56,11 @@ function toDraw(w, scn){
  * Retrieves all the images and returns them in an array */
 function getImages(){
     var images = [imageMacro('images/background.png')];
-    images.push(imageMacro('images/snow.png'));
+
+    /** Insert snow */
+    for(i = 0; i < 100; i++)
+        images.push(generateSnow());
+
     images.push(imageMacro('images/tree.png'));
     images.push(imageMacro('images/ribbons.png'));
     images.push(imageMacro('images/merry.png'));
@@ -63,6 +69,23 @@ function getImages(){
     return images;
 }
 
+/** generateSnow : -> TreeImage
+ * Generates a random snowflake */
+function generateSnow(){
+    var r = Math.random();
+    if(r < 0.5)
+        return new TreeImage('images/snowflakesmall.png', 
+            Math.random()*WIDTH, Math.random()*HEIGHT);
+    else if (r < 0.7)
+        return new TreeImage('images/snowflakemed.png', 
+            Math.random()*WIDTH, Math.random()*HEIGHT);
+    else
+        return new TreeImage('images/snowflakelarge.png',
+            Math.random()*WIDTH, Math.random()*HEIGHT);
+}
+
+/** imageMacro : String -> TreeImage
+ * Gets the image from the string source and places it at x=0, y=0. */
 function imageMacro(src){
     return new TreeImage(src,0,0);
 }
