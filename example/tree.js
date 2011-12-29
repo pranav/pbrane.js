@@ -43,16 +43,28 @@ function nextWorld(w){
 /** toDraw : World Scene -> Void
  * Draws the world state onto the given Scene */
 function toDraw(w, scn){
-    var i = 0;
-    scn.drawImage(w.images[i].image, w.images[i].x, w.images[i].y);
+    var i = 0
+    while(i < w.images.length){
+        scn.drawImage(w.images[i].image, w.images[i].x, w.images[i].y);
+        i += 1;
+    }
 }
 
 /** getImages : -> [Arrayof TreeImage]
  * Retrieves all the images and returns them in an array */
 function getImages(){
-    var images = [new TreeImage('images/background.png', 0, 0)];
-    images.push(new TreeImage('images/tree.png',0,0));
+    var images = [imageMacro('images/background.png')];
+    images.push(imageMacro('images/snow.png'));
+    images.push(imageMacro('images/tree.png'));
+    images.push(imageMacro('images/ribbons.png'));
+    images.push(imageMacro('images/merry.png'));
+    images.push(imageMacro('images/christmas.png'));
+    images.push(imageMacro('images/yellowbulbs.png'));    
     return images;
+}
+
+function imageMacro(src){
+    return new TreeImage(src,0,0);
 }
 
 /** Returns World0, the initial state for the Canvas */
