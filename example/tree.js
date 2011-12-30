@@ -10,11 +10,9 @@ var speed_variance = 1;
 
 /** Data definition for a World
  * A World consists of:
- * - Array of TreeImage
- * - Mouse Position [x, y] */
+ * - Array of TreeImage */
 function World(){
     this.images = [];
-    this.mousePosn = [];
 }
 
 /** TreeImage : String Int Int ... [String Int]-> TreeImage
@@ -33,6 +31,8 @@ function TreeImage(image_src, x, y, name, speed){
 /** mousehandler : World String MouseEvent -> World
  * Handles mouse interaction */
 function mousehandler(w, m, mevent){
+    if(m == "mousemove") // Change the speed of the snow
+        SPEED = Math.round(mevent.y/HEIGHT*2) + 1;
     return w;
 }
 
@@ -83,7 +83,7 @@ function getImages(){
     images.push(imageMacro('images/ribbons.png'));
     images.push(imageMacro('images/merry.png'));
     images.push(imageMacro('images/christmas.png'));
-    images.push(imageMacro('images/pokeballs.png'));
+    images.push(new TreeImage('images/pokeballs.png',0,0,"pokeballs"));
     images.push(imageMacro('images/pikachu.png'));
     images.push(imageMacro('images/yellowbulbs.png'));    
     return images;
@@ -120,8 +120,3 @@ function initialWorld(){
     
     return world;
 }
-
-
-
-
-
