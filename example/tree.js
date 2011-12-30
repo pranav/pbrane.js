@@ -5,7 +5,8 @@
 var canvas_id = "xmastree";
 var WIDTH = 450;
 var HEIGHT = 750;
-var SPEED = 1;
+var SPEED = 0.5;
+var speed_variance = 1;
 
 /** Data definition for a World
  * A World consists of:
@@ -82,6 +83,8 @@ function getImages(){
     images.push(imageMacro('images/ribbons.png'));
     images.push(imageMacro('images/merry.png'));
     images.push(imageMacro('images/christmas.png'));
+    images.push(imageMacro('images/pokeballs.png'));
+    images.push(imageMacro('images/pikachu.png'));
     images.push(imageMacro('images/yellowbulbs.png'));    
     return images;
 }
@@ -92,13 +95,16 @@ function generateSnow(){
     var r = Math.random();
     if(r < 0.5)
         return new TreeImage('images/snowflakesmall.png', 
-            Math.random()*WIDTH, Math.random()*HEIGHT, "snow", 3);
-    else if (r < 0.7)
+            Math.random()*WIDTH, Math.random()*HEIGHT, "snow", 
+                3 + Math.random() * speed_variance);
+    else if (r < 0.9)
         return new TreeImage('images/snowflakemed.png', 
-            Math.random()*WIDTH, Math.random()*HEIGHT, "snow", 2);
+            Math.random()*WIDTH, Math.random()*HEIGHT, "snow",
+                2 + Math.random() * speed_variance);
     else
         return new TreeImage('images/snowflakelarge.png',
-            Math.random()*WIDTH, Math.random()*HEIGHT, "snow", 1);
+            Math.random()*WIDTH, Math.random()*HEIGHT, "snow",
+                1 + Math.random() * speed_variance);
 }
 
 /** imageMacro : String -> TreeImage
