@@ -1,4 +1,4 @@
-This is the Documentation for the HTML5 Javascript game library 'P-Brain.'
+This is the Documentation for the HTML5 Javascript game library 'pbrane.js.'
 
 
 
