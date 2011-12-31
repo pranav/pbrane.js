@@ -1,4 +1,4 @@
-To generate the pbrain.js file, please use the command:
+To generate the pbrane.js file, please use the command:
 $ make
 
-That should place a new pbrain.js file in build/
+That should place a new pbrane.js file in build/
