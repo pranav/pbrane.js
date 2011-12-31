@@ -14,7 +14,6 @@ function drawRect(x, y, width, height, color, scn){
 /** drawCircle : Int Int Int Color Scene -> Scene
  * drawCircle requires x, y, radius, color (in hex), and Context */
 function drawCircle(x, y, r, color, scn){
-    scn.beginpath();
     scn.arc(x, y, r, 0, 2*Math.PI, false);
     scn.fillStyle = color;
     scn.fill();

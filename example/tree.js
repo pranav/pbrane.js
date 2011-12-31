@@ -68,6 +68,8 @@ function toDraw(w, scn){
         scn.drawImage(w.images[i].image, w.images[i].x, w.images[i].y);
         i += 1;
     }
+    
+    scn = drawCircle(50,50,50,"#000000", scn);
 }
 
 /** getImages : -> [Arrayof TreeImage]
