@@ -96,11 +96,16 @@ draw : PBrane ->
 function draw(brane){
     var element = document.getElementById(brane.id);
     var ctx = element.getContext("2d");
-    //ctx.clearRect(0,0,element.width,element.height);
-    var w = ctx.width;
-    ctx.width = 1;
-    ctx.width = w;
-    brane.draw(brane.state, ctx);
+    scn = brane.draw(brane.state,emptyScene(element));
+    scn(ctx);
+}
+
+/*
+emptyScene : Canvas -> Scene
+creates the base scene for drawing
+*/
+function emptyScene(element){
+    return function(ctx){element.width = element.width;}
 }
 
 /*

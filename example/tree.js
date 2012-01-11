@@ -21,8 +21,7 @@ function World(){
  * Speed is an optional argument used to alter speed of falling snow */
 function TreeImage(image_src, x, y, name, speed){
     this.name = name;
-    this.image = new Image();
-    this.image.src = image_src;
+    this.image = loadImage(image_src);
     this.x = x;
     this.y = y;
     this.speed = speed;
@@ -63,13 +62,14 @@ function nextWorld(w){
 /** toDraw : World Scene -> Void
  * Draws the world state onto the given Scene */
 function toDraw(w, scn){
-    var i = 0
+    var i = 0;
+    curScn = scn;
     while(i < w.images.length){
-        scn.drawImage(w.images[i].image, w.images[i].x, w.images[i].y);
+        curScn = w.images[i].image(w.images[i].x, w.images[i].y,curScn);
         i += 1;
     }
     
-    scn = drawCircle(50,50,50,"#000000", scn);
+    return circle(50,"#000000")(0,0,curScn);
 }
 
 /** getImages : -> [Arrayof TreeImage]

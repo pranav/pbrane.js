@@ -3,7 +3,7 @@ This is the overview file. it lays out the flow for pbrane.js.
 
 to launch the use provides up to 4 functions, a CanvasId, and a World:
 
-draw : World CanvasContex ->
+draw : World Scene -> Scene
     This function controls drawing to the given canvas, pulled from the canvas id
     for now the context is only 2d     
 
@@ -38,7 +38,11 @@ A MouseEvent is a class with a type, id, x, y
 
 A Key Event is a class with a type and an id
         
+A Scene is a function that takes in a context and draws to it. This representation is meant to not be seen on the client side.
 
+A PImage is a internal rep of an image. it is a function that takes in an X,Y, and Scene and return a new scene with that image draw to the scene
+
+A Color is a string of a hex code ie '#000000'
 
 launch : World, CanvasId, draw, tick = null, key = null, mouse = null ->
 
